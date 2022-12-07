@@ -1,5 +1,7 @@
 # Welcome
 
+This repository contains starter code for HackerRank technical assessment.
+
 # Set up
 
 Fork this repository and clone locally
