@@ -4,7 +4,7 @@ class DogsController < ApplicationController
   # GET /dogs
   # GET /dogs.json
   def index
-    @dogs = Dog.all
+    @dogs = Dog.joins(:like).all
     @pagy, @dogs = pagy(@dogs)
   end
 
@@ -69,6 +69,12 @@ class DogsController < ApplicationController
     end
   end
 
+  # likes /likes/dog/:dog_id
+  def likes
+    puts 'LIKED DOG '
+    Like.exists?(dog_id: params[:dog_id]) ? add_like : create_like
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -79,5 +85,15 @@ class DogsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def dog_params
     params.require(:dog).permit(:name, :description, :images)
+  end
+
+  def add_like
+    like = Like.where(dog_id: params[:dog_id]).first
+    like.count += 1
+    like.save
+  end
+
+  def create_like
+    Like.create(dog_id: params[:dog_id], count: 1)
   end
 end

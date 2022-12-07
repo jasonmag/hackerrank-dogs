@@ -1,5 +1,8 @@
 <section>
   <h2><%= @dog.name %></h2>
+  <% if user_signed_in? && current_user.dog_id != @dog.id %>
+    <%= button_to "Like", like_path(@dog), method:"post" %>
+  <% end %>
 
   <% @dog.images.each do |image| %>
     <%= image_tag url_for(image), alt: "Photo of #{@dog.name}" %>
