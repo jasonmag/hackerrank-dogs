@@ -20,6 +20,9 @@ class DogsController < ApplicationController
 
   # GET /dogs/1/edit
   def edit
+    unless current_user
+      redirect_to root_path, :alert => "Only Dog Owners allowed."
+    end
   end
 
   # POST /dogs
